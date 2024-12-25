@@ -1,5 +1,8 @@
-package entity;
+package service;
 
+import entity.Book;
+import entity.LibraryItem;
+import entity.Magazine;
 import exception.ItemNotFoundException;
 
 import java.util.ArrayList;
@@ -13,34 +16,63 @@ public class Library {
         System.out.println("Item with ID: "+ item.getId()+" added successfully");
     }
 
-    public void displayItems(){
+    public void displayBooks() throws RuntimeException{
+        if(items.isEmpty()){
+            throw new RuntimeException("No magazine to display");
+        }
         for(LibraryItem item:items){
-            System.out.println(item.getItemDetail());
+            if(item instanceof Book){
+                System.out.println(item.getItemDetail());
+            }
+
         }
     }
 
-    public void getElementByID(String id){
-        Long input = Long.parseLong(id);
+    public void displayMagazine() throws RuntimeException{
+        if(items.isEmpty()){
+            throw new RuntimeException("No magazine to display");
+        }
+        for(LibraryItem item:items){
+            if(item instanceof Magazine){
+                System.out.println(item.getItemDetail());
+            }
+
+        }
+    }
+
+    public void getElementByID(String id) throws ItemNotFoundException{
         boolean found = false;
         for(LibraryItem item:items){
-            if(item.getId().equals(input)){
-                item.getItemDetail();
+            if(item.getId().equals(id)){
+                System.out.println(item.getItemDetail());
                 found = true;
                 break;
             }
         }
         if(!found){
-            throw new ItemNotFoundException("Sorry item not found please try again");
+            throw new ItemNotFoundException("Item",Long.parseLong(id));
         }
+    }
+
+    public LibraryItem returnElementById(String id) throws ItemNotFoundException{
+        boolean found = false;
+        for(LibraryItem item:items){
+            if(item.getId().equals(id)){
+                return item;
+            }
+        }
+        if(!found){
+            throw new ItemNotFoundException("Item",Long.parseLong(id));
+        }
+        return null;
     }
 
 
     public void deleteItem(String id) throws ItemNotFoundException{
-        Long input = Long.parseLong(id);
         boolean found = false;
         LibraryItem removedItem = null;
         for(LibraryItem item:items){
-            if(item.getId().equals(input)){
+            if(item.getId().equals(id)){
                 removedItem = item;
                 found = true;
                 break;
@@ -50,8 +82,23 @@ public class Library {
             items.remove(removedItem);
             System.out.println("Item deleted successfully!");
         }else {
-            throw new ItemNotFoundException("Sorry item not found please try again");
+            throw new ItemNotFoundException("Item",Long.parseLong(id));
         }
     }
 
+    public void borrowItem(String id) throws ItemNotFoundException{
+        boolean found = false;
+        for(LibraryItem item:items){
+            if(item.getId().equals(id)){
+                if(!item.isAvailability()){
+                    throw new RuntimeException("Sorry item is not available now");
+                }
+                item.setAvailability(false);
+                found = true;
+            }
+        }
+        if(!found){
+            throw new ItemNotFoundException("Item",Long.parseLong(id));
+        }
+    }
 }

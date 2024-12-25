@@ -1,28 +1,23 @@
-package model;
+package entity;
+
+import java.util.UUID;
 
 public abstract class LibraryItem {
-    private Long id;
+    private String id;
     private String title;
-    private String author;
-    private String publisher;
-    private int publisherYear;
     private boolean availability;
 
-    public LibraryItem(Long id, String title, String author,
-                       String publisher, int publisherYear, boolean availability) {
-        this.id = id;
+    public LibraryItem(String title) {
+        this.id = UUID.randomUUID().toString();
         this.title = title;
-        this.author = author;
-        this.publisher = publisher;
-        this.publisherYear = publisherYear;
-        this.availability = availability;
+        this.availability = true;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -34,29 +29,6 @@ public abstract class LibraryItem {
         this.title = title;
     }
 
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
-
-    public int getPublisherYear() {
-        return publisherYear;
-    }
-
-    public void setPublisherYear(int publisherYear) {
-        this.publisherYear = publisherYear;
-    }
 
     public boolean isAvailability() {
         return availability;
@@ -66,17 +38,6 @@ public abstract class LibraryItem {
         this.availability = availability;
     }
 
-    @Override
-    public String toString() {
-        return "LibraryItem{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", publisher='" + publisher + '\'' +
-                ", publisherYear=" + publisherYear +
-                ", availability=" + availability +
-                '}';
-    }
 
-    abstract String getItemDetail();
+    public abstract String getItemDetail();
 }
