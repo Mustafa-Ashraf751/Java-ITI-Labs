@@ -8,7 +8,7 @@ public abstract class LibraryItem {
     private boolean availability;
 
     public LibraryItem(String title) {
-        this.id = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID().toString().substring(0, 8);
         this.title = title;
         this.availability = true;
     }

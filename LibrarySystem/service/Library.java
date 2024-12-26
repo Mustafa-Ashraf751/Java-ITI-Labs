@@ -50,7 +50,7 @@ public class Library {
             }
         }
         if(!found){
-            throw new ItemNotFoundException("Item",Long.parseLong(id));
+            throw new ItemNotFoundException("Item",id);
         }
     }
 
@@ -62,7 +62,7 @@ public class Library {
             }
         }
         if(!found){
-            throw new ItemNotFoundException("Item",Long.parseLong(id));
+            throw new ItemNotFoundException("Item",id);
         }
         return null;
     }
@@ -82,7 +82,7 @@ public class Library {
             items.remove(removedItem);
             System.out.println("Item deleted successfully!");
         }else {
-            throw new ItemNotFoundException("Item",Long.parseLong(id));
+            throw new ItemNotFoundException("Item",id);
         }
     }
 
@@ -98,7 +98,23 @@ public class Library {
             }
         }
         if(!found){
-            throw new ItemNotFoundException("Item",Long.parseLong(id));
+            throw new ItemNotFoundException("Item",id);
         }
     }
+
+
+    public void returnBook(String id){
+        boolean found = false;
+        for(LibraryItem item:items){
+            if(item.getId().equals(id)){
+                item.setAvailability(true);
+                found = true;
+            }
+        }
+        if(!found){
+            throw new ItemNotFoundException("Item",id);
+        }
+    }
+
+
 }

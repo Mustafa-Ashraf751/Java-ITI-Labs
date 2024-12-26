@@ -32,7 +32,7 @@ public class Main {
                        if(word.length()>1){
                            throw new IllegalArgumentException("Only character is allowed");
                        }else{
-                           app.listWords(word);
+                           app.listWords(word.charAt(0));
                        }
                        break;
                    case 4:

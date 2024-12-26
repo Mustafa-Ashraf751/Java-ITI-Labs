@@ -2,7 +2,7 @@ package exception;
 
 public class ItemNotFoundException extends RuntimeException {
     private String resourceName;
-    private Long resourceId;
+    private String resourceId;
 
     public ItemNotFoundException() {
     }
@@ -11,8 +11,8 @@ public class ItemNotFoundException extends RuntimeException {
         super(message);
     }
 
-    public ItemNotFoundException(String resourceName,Long id){
-        super(String.format("%s with ID %d is not found",resourceName,id));
+    public ItemNotFoundException(String resourceName,String id){
+        super(String.format("%s with ID %s is not found",resourceName,id));
         this.resourceName = resourceName;
         this.resourceId = id;
     }

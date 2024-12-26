@@ -25,4 +25,16 @@ public class Magazine extends LibraryItem {
                 ", edition='" + category + '\'' +
                 '}';
     }
+
+    @Override
+    public String toString() {
+        return "Magazine{"+
+                "id=" + getId() +
+                ", title='" + getTitle() + '\'' +
+                ", availability=" + isAvailability() +
+                "genre='" + issueNumber + '\'' +
+                ", ISBN='" + month + '\'' +
+                ", edition='" + category + '\'' +
+                '}';
+    }
 }

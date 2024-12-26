@@ -25,5 +25,15 @@ public class Book extends LibraryItem {
                 '}';
     }
 
-
+    @Override
+    public String toString() {
+        return "Book{"+
+                "id=" + getId() +
+                ", title='" + getTitle() + '\'' +
+                ", availability=" + isAvailability() +
+                "genre='" + genre + '\'' +
+                ", ISBN='" + ISBN + '\'' +
+                ", edition='" + edition + '\'' +
+                '}';
+    }
 }

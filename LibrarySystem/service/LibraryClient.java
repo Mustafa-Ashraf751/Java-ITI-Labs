@@ -6,9 +6,15 @@ import exception.ItemNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LibraryClient {
     private List<Client> clients = new ArrayList<>();
+    private Library library;
+
+    public LibraryClient(Library library) {
+        this.library = library;
+    }
 
     public void addClient(Client client){
         for(Client c : clients){
@@ -44,7 +50,7 @@ public class LibraryClient {
             }
         }
         if(!found){
-            throw new ItemNotFoundException("Client",id);
+            throw new ItemNotFoundException("Client",String.valueOf(id));
         }
     }
 
@@ -66,29 +72,52 @@ public class LibraryClient {
             clients.remove(removedClient);
             System.out.println("Client removed successfully!");
         }else{
-            throw new ItemNotFoundException("Client",id);
+            throw new ItemNotFoundException("Client",String.valueOf(id));
         }
     }
 
     public void clientBorrow(String id,Long clientId) throws ItemNotFoundException{
-        Library library = new Library();
-        library.borrowItem(id);
+        this.library.borrowItem(id);
         Client client = null;
-        boolean found = false;
         for(Client c : clients){
             if(c.getNationalId().equals(clientId)){
                 client = c;
-                found = true;
             }
         }
-        if(!found){
-            throw new ItemNotFoundException("Client",clientId);
+        if(client == null){
+            throw new ItemNotFoundException("Client",String.valueOf(clientId));
         }
-        List<LibraryItem> items = client.getItems();
+       List<LibraryItem> items = client.getItems();
         LibraryItem item = library.returnElementById(id);
         items.add(item);
         client.setItems(items);
         System.out.println("Item added to user successfully");
+    }
+
+    public void clientBack(String id,Long clientId){
+        library.returnBook(id);
+        Client client = null;
+        for(Client c : clients){
+            if(c.getNationalId().equals(clientId)){
+                client = c;
+            }
+        }
+        if(client==null){
+            throw new ItemNotFoundException("Client",String.valueOf(clientId));
+        }
+        List<LibraryItem> items = client.getItems();
+        LibraryItem item = library.returnElementById(id);
+        items.remove(item);
+        client.setItems(items);
+        System.out.println("Item deleted from user successfully");
+    }
+
+    public void getBooksByUserId(Long id){
+          clients.stream()
+                .filter(client->client.getNationalId().equals(id))
+                .map(Client::getItems)
+                .forEach(System.out::println);
+
     }
 
 }

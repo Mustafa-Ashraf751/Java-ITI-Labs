@@ -10,9 +10,9 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        LibraryClient libraryClient = new LibraryClient();
         Library libraryItems = new Library();
-        String strInput;int choose=0;
+        LibraryClient libraryClient = new LibraryClient(libraryItems);
+        String strInput;           int choose=0;
         main_loop: while(true){
             try{
                 System.out.println("Please choose option from below");
@@ -22,7 +22,8 @@ public class Main {
                 switch (choose){
                     case 1:
                         System.out.println("1-create Client\n2-get all" +
-                                " clients\n3-get client by id\n4-delete Client by Id\n5-Borrow a book");
+                                " clients\n3-get client by id\n4-delete Client by " +
+                                "Id\n5-Borrow a book\n6-Return book\n7-get books by user");
                         strInput = scan.nextLine();
                         choose = Integer.parseInt(strInput);
                         switch (choose){
@@ -57,6 +58,18 @@ public class Main {
                                 System.out.println("Please enter user id: ");
                                 String userID = scan.nextLine();
                                 libraryClient.clientBorrow(itemID,Long.parseLong(userID));
+                                break;
+                            case 6:
+                                System.out.println("Please enter Item id: ");
+                                String itemIdDel = scan.nextLine();
+                                System.out.println("Please enter user id: ");
+                                String userIdDel = scan.nextLine();
+                                libraryClient.clientBack(itemIdDel,Long.parseLong(userIdDel));
+                                break;
+                            case 7:
+                                System.out.println("PLease enter user id");
+                                String uid = scan.nextLine();
+                                libraryClient.getBooksByUserId(Long.parseLong(uid));
                         }
                         break;
                     case 2:
@@ -142,6 +155,7 @@ public class Main {
                         System.out.println("Invalid number option try again!");
                 }
             }catch(NumberFormatException n){
+                System.out.println(n.getMessage());
                 System.out.println("Invalid number format please try again");
             }catch(ItemNotFoundException i){
                 System.out.println(i.getMessage());
