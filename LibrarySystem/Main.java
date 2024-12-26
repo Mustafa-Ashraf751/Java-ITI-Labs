@@ -85,8 +85,10 @@ public class Main {
                                     case 1:
                                         System.out.println("Enter book title: ");
                                         String title = scan.nextLine();
+                                        libraryItems.validateString(title);
                                         System.out.println("Enter book genre: ");
                                         String genre = scan.nextLine();
+                                        libraryItems.validateString(genre);
                                         System.out.println("Enter book ISBN: ");
                                         String ISBN = scan.nextLine();
                                         System.out.println("Enter book edition");
@@ -119,12 +121,14 @@ public class Main {
                                     case 1:
                                         System.out.println("Enter magazine title: ");
                                         String title = scan.nextLine();
+                                        libraryItems.validateString(title);
                                         System.out.println("Enter book issueNumber: ");
                                         String issueNumber = scan.nextLine();
                                         System.out.println("Enter book month: ");
                                         String month = scan.nextLine();
                                         System.out.println("Enter book category");
                                         String category = scan.nextLine();
+                                        libraryItems.validateString(category);
                                         Magazine magazine = new Magazine(title,issueNumber,month,category);
                                         libraryItems.addItem(magazine);
                                         break;
@@ -155,7 +159,6 @@ public class Main {
                         System.out.println("Invalid number option try again!");
                 }
             }catch(NumberFormatException n){
-                System.out.println(n.getMessage());
                 System.out.println("Invalid number format please try again");
             }catch(ItemNotFoundException i){
                 System.out.println(i.getMessage());
